@@ -1,39 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.emp.gl.timer.service;
 
 /**
- * Interface du service de temps
- * Fournit l'heure actuelle et notifie les changements
+ * Interface du service de temps.
+ * <p>
+ * Fournit les informations temporelles actuelles (heures, minutes,
+ * secondes, dixièmes de seconde) et permet à des observateurs
+ * de s'abonner pour être notifiés de tout changement.
+ * </p>
  *
- * @author tina
+ * Pattern Observer : les classes implémentant cette interface
+ * agissent comme des "sujets" qui notifient leurs observateurs
+ * à chaque variation du temps.
+ *
+ * @author Amine
  */
 public interface TimerService extends TimeChangeProvider {
 
     /**
-     * Obtenir les minutes
-     * @return les minutes (0-59)
+     * Retourne les minutes actuelles.
+     *
+     * @return les minutes (0–59)
      */
     int getMinutes();
 
     /**
-     * Obtenir les heures
-     * @return les heures (0-23)
+     * Retourne les heures actuelles.
+     *
+     * @return les heures (0–23)
      */
     int getHeures();
 
     /**
-     * Obtenir les secondes
-     * @return les secondes (0-59)
+     * Retourne les secondes actuelles.
+     *
+     * @return les secondes (0–59)
      */
     int getSecondes();
 
     /**
-     * Obtenir les dixièmes de seconde
-     * @return les dixièmes de seconde (0-9)
+     * Retourne les dixièmes de seconde actuels.
+     *
+     * @return les dixièmes de seconde (0–9)
      */
     int getDixiemeDeSeconde();
 }

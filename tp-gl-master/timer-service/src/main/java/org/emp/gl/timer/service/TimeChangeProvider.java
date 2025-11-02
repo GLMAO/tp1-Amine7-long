@@ -1,27 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.emp.gl.timer.service;
 
 /**
- * Interface pour les fournisseurs de notifications de changement de temps
- * Pattern Observer: permet aux objets de s'abonner aux notifications
+ * Interface pour les fournisseurs de notifications de changement de temps.
+ * Implémente le pattern Observer : permet aux objets de s'abonner
+ * et de se désabonner des notifications de changement de temps.
  *
- * @author tina
+ * @author Amine
  */
 public interface TimeChangeProvider {
 
     /**
-     * Ajouter un listener pour être notifié des changements
-     * @param pl le listener à ajouter
+     * Ajoute un listener pour être notifié des changements temporels.
+     *
+     * @param listener le listener à ajouter
      */
-    public void addTimeChangeListener(TimerChangeListener pl);
+    void addTimeChangeListener(TimerChangeListener listener);
 
     /**
-     * Retirer un listener
-     * @param pl le listener à retirer
+     * Retire un listener pour qu'il ne soit plus notifié.
+     *
+     * @param listener le listener à retirer
      */
-    public void removeTimeChangeListener(TimerChangeListener pl);
+    void removeTimeChangeListener(TimerChangeListener listener);
 }

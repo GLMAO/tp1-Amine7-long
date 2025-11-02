@@ -3,9 +3,15 @@ package org.emp.gl.clients;
 import org.emp.gl.timer.service.TimerChangeListener;
 import org.emp.gl.timer.service.TimerService;
 
+import java.beans.PropertyChangeEvent;
+
 /**
  * Compte à rebours qui se décrémente à chaque seconde
- * S'arrête automatiquement quand il atteint 0
+ * et s'arrête automatiquement lorsqu'il atteint 0.
+ *
+ * Compatible avec PropertyChangeSupport.
+ *
+ * @author Amine
  */
 public class CompteARebours implements TimerChangeListener {
 
@@ -14,8 +20,9 @@ public class CompteARebours implements TimerChangeListener {
     private boolean actif;
 
     /**
-     * Constructeur du compte à rebours
-     * @param initial le nombre de secondes initial
+     * Constructeur du compte à rebours.
+     *
+     * @param initial      le nombre de secondes initial
      * @param timerService le service de temps
      */
     public CompteARebours(int initial, TimerService timerService) {
@@ -29,17 +36,18 @@ public class CompteARebours implements TimerChangeListener {
         System.out.println("⏳ Compte à rebours démarré avec " + initial + " secondes");
     }
 
+    /**
+     * Réagit aux changements de propriétés du service de temps.
+     * Ne prend en compte que les changements de secondes.
+     */
     @Override
-    public void propertyChange(String prop, Object oldValue, Object newValue) {
-        // Ne réagit qu'aux changements de secondes
-        if (SECONDE_PROP.equals(prop) && actif) {
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (TimerChangeListener.SECONDE_PROP.equals(evt.getPropertyName()) && actif) {
             tick();
         }
     }
 
-    /**
-     * Décrémente le compteur à chaque tick
-     */
+    /** Décrémente le compteur à chaque tick */
     private void tick() {
         compteur--;
 
@@ -51,9 +59,7 @@ public class CompteARebours implements TimerChangeListener {
         }
     }
 
-    /**
-     * Arrête le compte à rebours
-     */
+    /** Arrête le compte à rebours */
     public void arreter() {
         if (actif) {
             actif = false;
@@ -62,10 +68,7 @@ public class CompteARebours implements TimerChangeListener {
         }
     }
 
-    /**
-     * Redémarre le compte à rebours avec une nouvelle valeur
-     * @param nouvelleValeur la nouvelle valeur de départ
-     */
+    /** Redémarre le compte à rebours avec une nouvelle valeur */
     public void redemarrer(int nouvelleValeur) {
         if (!actif) {
             actif = true;
@@ -75,18 +78,12 @@ public class CompteARebours implements TimerChangeListener {
         }
     }
 
-    /**
-     * Obtient la valeur actuelle du compteur
-     * @return le compteur
-     */
+    /** Obtient la valeur actuelle du compteur */
     public int getCompteur() {
         return compteur;
     }
 
-    /**
-     * Vérifie si le compte à rebours est actif
-     * @return true si actif
-     */
+    /** Vérifie si le compte à rebours est actif */
     public boolean isActif() {
         return actif;
     }

@@ -1,19 +1,25 @@
 package org.emp.gl.clients;
 
-import org.emp.gl.timer.service.TimerService;
 import org.emp.gl.timer.service.TimerChangeListener;
+import org.emp.gl.timer.service.TimerService;
+
+import java.beans.PropertyChangeEvent;
 
 /**
- * Classe Horloge qui affiche l'heure en temps réel
+ * Classe Horloge qui affiche l'heure en temps réel.
  * Implémente TimerChangeListener pour être notifiée des changements
+ * du TimerService via PropertyChangeSupport.
+ *
+ * @author Amine
  */
 public class Horloge implements TimerChangeListener {
 
-    String name;
-    TimerService timerService;
+    private final String name;
+    private TimerService timerService;
 
     /**
-     * Constructeur de l'horloge
+     * Constructeur de l'horloge.
+     *
      * @param name le nom de l'horloge
      */
     public Horloge(String name) {
@@ -22,7 +28,8 @@ public class Horloge implements TimerChangeListener {
     }
 
     /**
-     * Définit le service de temps et s'inscrit comme listener
+     * Définit le service de temps et s'inscrit comme listener.
+     *
      * @param service le service de temps
      */
     public void setTimerService(TimerService service) {
@@ -41,7 +48,7 @@ public class Horloge implements TimerChangeListener {
     }
 
     /**
-     * Affiche l'heure actuelle au format HH:MM:SS
+     * Affiche l'heure actuelle au format HH:MM:SS.
      */
     public void afficherHeure() {
         if (timerService != null) {
@@ -55,7 +62,8 @@ public class Horloge implements TimerChangeListener {
     }
 
     /**
-     * Formate un nombre sur 2 chiffres (ajoute un 0 devant si < 10)
+     * Formate un nombre sur 2 chiffres (ajoute un 0 devant si < 10).
+     *
      * @param number le nombre à formater
      * @return le nombre formaté (ex: 9 → "09", 15 → "15")
      */
@@ -64,25 +72,22 @@ public class Horloge implements TimerChangeListener {
     }
 
     /**
-     * Méthode appelée par le TimerService lors d'un changement
-     * Implémentation de TimerChangeListener
+     * Méthode appelée par le TimerService lorsqu'une propriété change.
+     * Affiche l'heure uniquement quand la seconde change.
      *
-     * @param prop le nom de la propriété qui a changé
-     * @param oldValue l'ancienne valeur
-     * @param newValue la nouvelle valeur
+     * @param evt événement contenant le nom de la propriété et les valeurs
      */
     @Override
-    public void propertyChange(String prop, Object oldValue, Object newValue) {
-        // Afficher l'heure uniquement quand les secondes changent
-        // (pour éviter trop d'affichages avec les dixièmes de seconde)
-        if (SECONDE_PROP.equals(prop)) {
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (TimerChangeListener.SECONDE_PROP.equals(evt.getPropertyName())) {
             afficherHeure();
         }
     }
 
     /**
-     * Obtient le nom de l'horloge
-     * @return le nom
+     * Obtient le nom de l'horloge.
+     *
+     * @return le nom de cette horloge
      */
     public String getName() {
         return name;

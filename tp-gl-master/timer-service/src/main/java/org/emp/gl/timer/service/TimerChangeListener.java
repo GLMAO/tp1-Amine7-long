@@ -1,45 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.emp.gl.timer.service;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 /**
- * Interface pour écouter les changements de temps
- * Pattern Observer: les objets implémentant cette interface seront notifiés
+ * Interface pour écouter les changements de temps.
+ * Implémente le pattern Observer via PropertyChangeListener.
  *
- * @author tina
+ * Chaque listener reçoit des événements contenant le nom
+ * de la propriété (seconde, minute, heure, dixième de seconde)
+ * et les valeurs avant/après.
+ *
+ * @author Amine
  */
-public interface TimerChangeListener {
+public interface TimerChangeListener extends PropertyChangeListener {
+
+    /** Constante pour la propriété "dixième de seconde" */
+    String DIXEME_DE_SECONDE_PROP = "dixieme";
+
+    /** Constante pour la propriété "seconde" */
+    String SECONDE_PROP = "seconde";
+
+    /** Constante pour la propriété "minute" */
+    String MINUTE_PROP = "minute";
+
+    /** Constante pour la propriété "heure" */
+    String HEURE_PROP = "heure";
 
     /**
-     * Constante pour la propriété "dixième de seconde"
-     */
-    final static String DIXEME_DE_SECONDE_PROP = "dixième";
-
-    /**
-     * Constante pour la propriété "seconde"
-     */
-    final static String SECONDE_PROP = "seconde";
-
-    /**
-     * Constante pour la propriété "minute"
-     */
-    final static String MINUTE_PROP = "minute";
-
-    /**
-     * Constante pour la propriété "heure"
-     */
-    final static String HEURE_PROP = "heure";
-
-    /**
-     * Méthode appelée par le TimeChangeProvider à chaque fois
-     * qu'il y a un changement sur l'une des propriétés de l'heure
+     * Méthode appelée automatiquement lorsqu’une propriété du temps change.
+     * Elle reçoit un PropertyChangeEvent contenant :
+     *   - le nom de la propriété (prop)
+     *   - l’ancienne valeur (oldValue)
+     *   - la nouvelle valeur (newValue)
      *
-     * @param prop le nom de la propriété qui a changé (DIXEME_DE_SECONDE_PROP, SECONDE_PROP, etc.)
-     * @param oldValue l'ancienne valeur
-     * @param newValue la nouvelle valeur
+     * @param evt événement de changement de propriété
      */
-    void propertyChange(String prop, Object oldValue, Object newValue);
+    @Override
+    void propertyChange(PropertyChangeEvent evt);
 }
